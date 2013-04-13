@@ -6,7 +6,7 @@ use Test::More ();
 use 5.008_005;
 our $VERSION = '0.01';
 
-our @EXPORT = ("bang_away_ok", "ints");
+our @EXPORT = qw(bang_away_ok);
 
 sub bang_away_ok (&$;@) {
     my $code = shift;
@@ -20,8 +20,6 @@ sub bang_away_ok (&$;@) {
     }
     Test::More::ok 1;
 }
-
-sub ints { sub { int(rand 100) } }
 
 1;
 __END__

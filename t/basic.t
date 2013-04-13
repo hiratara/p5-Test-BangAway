@@ -2,6 +2,7 @@ use strict;
 use Test::More;
 use Test::Builder::Tester;
 use Test::BangAway;
+use Test::BangAway::Generator;
 
 test_out "ok 1";
 bang_away_ok { 1 } ints;
