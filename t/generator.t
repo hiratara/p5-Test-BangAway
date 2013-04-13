@@ -20,4 +20,9 @@ bang_away_ok {
     ref $hash eq 'HASH' && ! grep { $_ < 50 || 60 < $_ } values %$hash;
 } ref_hash string(10, 15), range(50, 60), 5, 10;
 
+bang_away_ok {
+    my $array = shift;
+    ref $array eq 'ARRAY' && ! grep { ! /^[a-z]$/ } @$array;
+} ref_array(elements('a' .. 'z'), 5, 10);
+
 done_testing;

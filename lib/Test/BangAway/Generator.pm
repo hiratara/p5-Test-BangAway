@@ -4,7 +4,7 @@ use warnings;
 use Exporter qw(import);
 
 our @EXPORT = qw(
-    gen const range elements list integer char string concat ref_hash
+    gen const range elements list integer char string concat ref_hash ref_array
 );
 
 sub gen (&) {
@@ -52,6 +52,11 @@ sub ref_hash ($$;$$) {
    list(
        concat($key_generator, $value_generator), $item_min, $item_max
    )->map(sub { +{@_} });
+}
+
+sub ref_array ($;$$) {
+    my ($generator, $min, $max) = @_;
+    list($generator, $min, $max)->map(sub { [@_] });
 }
 
 sub pick {
