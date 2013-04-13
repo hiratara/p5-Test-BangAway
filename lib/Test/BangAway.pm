@@ -1,8 +1,23 @@
 package Test::BangAway;
-
 use strict;
+use warnings;
+use Exporter qw(import);
+use Test::More ();
 use 5.008_005;
 our $VERSION = '0.01';
+
+our @EXPORT = ("bang_away_ok", "ints");
+
+sub bang_away_ok ($$) {
+    my ($code, $generator) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    for (1 .. 10000) {
+        return Test::More::ok 0 unless $code->($generator->());
+    }
+    Test::More::ok 1;
+}
+
+sub ints { sub { int(rand 100) } }
 
 1;
 __END__
