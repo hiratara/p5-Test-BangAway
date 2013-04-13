@@ -8,10 +8,14 @@ our $VERSION = '0.01';
 
 our @EXPORT = ("bang_away_ok", "ints");
 
-sub bang_away_ok (&$) {
-    my ($code, $generator) = @_;
+sub bang_away_ok (&$;@) {
+    my $code = shift;
+    my $generator = shift;
+    my %params = @_;
+    my $shots = delete $params{shots} // 10000;
+
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    for (1 .. 10000) {
+    for (1 .. $shots) {
         return Test::More::ok 0 unless $code->($generator->());
     }
     Test::More::ok 1;

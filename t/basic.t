@@ -12,4 +12,8 @@ test_fail(+1);
 bang_away_ok { $_[0] == 10 ? 0 : 1 } ints;
 test_test "punch out the bug";
 
+test_out "ok 1";
+bang_away_ok { 0 } ints, shots => 0;
+test_test "Don't shoot, spend peacefully.";
+
 done_testing;
