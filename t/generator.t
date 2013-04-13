@@ -25,4 +25,13 @@ bang_away_ok {
     ref $array eq 'ARRAY' && ! grep { ! /^[a-z]$/ } @$array;
 } ref_array(elements('a' .. 'z'), 5, 10);
 
+bang_away_ok {
+    my $data = shift;
+    ref $data eq 'ARRAY' && ! grep { ! ref $_ eq 'HASH' } @$data;
+} ref_array(
+    ref_hash(
+        string() => ref_array(elements qw(True False))
+    ), 5, 10
+);
+
 done_testing;
