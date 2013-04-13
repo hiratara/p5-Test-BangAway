@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Exporter qw(import);
 
-our @EXPORT = qw(gen range elements list integer char);
+our @EXPORT = qw(gen range elements list integer char string);
 
 sub gen (&) {
     my $code = shift;
@@ -22,7 +22,8 @@ sub elements (@) {
 
 sub list ($;$$) {
     my $generator = shift;
-    (range 0, 9)->flat_map(sub {
+    my ($min, $max) = @_;
+    (range $min // 0, $max // 9)->flat_map(sub {
         my $n = shift;
         gen { map { $generator->pick } 1 .. $n };
     });
@@ -31,6 +32,11 @@ sub list ($;$$) {
 sub integer () { range -100, 100 } # FIXME
 
 sub char () { elements 'a' .. 'z', 'A' .. 'Z' }
+
+sub string (;$$) {
+    my ($min, $max) = @_;
+    (list char, $min, $max)->map(sub {join '', @_});
+}
 
 sub pick {
     my $self = shift;
