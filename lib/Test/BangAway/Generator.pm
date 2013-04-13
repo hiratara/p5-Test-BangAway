@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Exporter qw(import);
 
-our @EXPORT = qw(gen range elements list integer);
+our @EXPORT = qw(gen range elements list integer char);
 
 sub gen (&) {
     my $code = shift;
@@ -29,6 +29,8 @@ sub list ($;$$) {
 }
 
 sub integer () { range -100, 100 } # FIXME
+
+sub char () { elements 'a' .. 'z', 'A' .. 'Z' }
 
 sub pick {
     my $self = shift;
