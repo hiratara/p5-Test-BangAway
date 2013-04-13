@@ -1,6 +1,7 @@
 package Test::BangAway;
 use strict;
 use warnings;
+use Data::Dumper;
 use Exporter qw(import);
 use Test::More ();
 use 5.008_005;
@@ -16,7 +17,12 @@ sub bang_away_ok (&$;@) {
 
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     for (1 .. $shots) {
-        return Test::More::ok 0 unless $code->($generator->pick);
+        my @args = $generator->pick;
+        unless ($code->(@args)) {
+            Test::More::diag "Faild by following args: " .
+                             Data::Dumper->new(\@args)->Terse(1)->Dump;
+            return Test::More::ok 0 ;
+        }
     }
     Test::More::ok 1;
 }

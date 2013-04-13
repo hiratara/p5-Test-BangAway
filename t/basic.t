@@ -11,7 +11,8 @@ test_test "just bang away";
 test_out "not ok 1";
 test_fail(+1);
 bang_away_ok { $_[0] == 10 ? 0 : 1 } integer;
-test_test "punch out the bug";
+test_test title => "punch out the bug",
+          skip_err => 1;
 
 test_out "ok 1";
 bang_away_ok { 0 } integer, shots => 0;
