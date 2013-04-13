@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Exporter qw(import);
 
-our @EXPORT = qw(gen range ints);
+our @EXPORT = qw(gen range elements ints);
 
 sub gen (&) {
     my $code = shift;
@@ -15,11 +15,21 @@ sub range ($$) {
     gen { int (rand ($max - $min + 1)) + $min };
 }
 
+sub elements (@) {
+    my $ref_elems = \@_;
+    (range 0, $#$ref_elems)->map(sub { $ref_elems->[shift] });
+}
+
 sub ints () { range -100, 100 } # FIXME
 
 sub pick {
     my $self = shift;
     $self->();
+}
+
+sub map {
+    my ($self, $f) = @_;
+    gen { $f->($self->pick) };
 }
 
 1;
