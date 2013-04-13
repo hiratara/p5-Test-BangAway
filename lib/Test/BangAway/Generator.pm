@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Exporter qw(import);
 
-our @EXPORT = qw(gen const range elements list integer char string);
+our @EXPORT = qw(gen const range elements list integer char string concat);
 
 sub gen (&) {
     my $code = shift;
@@ -38,6 +38,11 @@ sub char () { elements 'a' .. 'z', 'A' .. 'Z' }
 sub string (;$$) {
     my ($min, $max) = @_;
     (list char, $min, $max)->map(sub {join '', @_});
+}
+
+sub concat (@) {
+    my @generators = @_;
+    gen { map { $_->pick } @generators };
 }
 
 sub pick {
