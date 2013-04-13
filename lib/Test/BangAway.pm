@@ -8,7 +8,7 @@ our $VERSION = '0.01';
 
 our @EXPORT = ("bang_away_ok", "ints");
 
-sub bang_away_ok ($$) {
+sub bang_away_ok (&$) {
     my ($code, $generator) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     for (1 .. 10000) {
