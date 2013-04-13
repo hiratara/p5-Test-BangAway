@@ -3,12 +3,14 @@ use strict;
 use warnings;
 use Exporter qw(import);
 
-our @EXPORT = qw(gen range elements list integer char string);
+our @EXPORT = qw(gen const range elements list integer char string);
 
 sub gen (&) {
     my $code = shift;
     bless $code => __PACKAGE__;
 }
+
+sub const (@) { my @args = @_; gen { @args } }
 
 sub range ($$) {
     my ($min, $max) = @_;
