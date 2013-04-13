@@ -15,4 +15,9 @@ bang_away_ok {
     $string =~ /^[a-zA-Z]*$/ && ! grep { $_ < 1 || 5 < $_ } @list;
 } concat +(string), (list (range 1, 5));
 
+bang_away_ok {
+    my $hash = shift;
+    ref $hash eq 'HASH' && ! grep { $_ < 50 || 60 < $_ } values %$hash;
+} ref_hash string(10, 15), range(50, 60), 5, 10;
+
 done_testing;
