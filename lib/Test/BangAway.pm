@@ -16,7 +16,7 @@ sub bang_away_ok (&$;@) {
 
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     for (1 .. $shots) {
-        return Test::More::ok 0 unless $code->($generator->());
+        return Test::More::ok 0 unless $code->($generator->pick);
     }
     Test::More::ok 1;
 }

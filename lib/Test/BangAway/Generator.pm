@@ -17,5 +17,10 @@ sub range ($$) {
 
 sub ints () { range -100, 100 } # FIXME
 
+sub pick {
+    my $self = shift;
+    $self->();
+}
+
 1;
 __END__
