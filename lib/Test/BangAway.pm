@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Data::Dumper;
 use Exporter qw(import);
+use Test::BangAway::CombinedMLCG;
 use Test::More ();
 use 5.008_005;
 our $VERSION = '0.01';
@@ -13,11 +14,12 @@ sub bang_away_ok (&$;@) {
     my $code = shift;
     my $generator = shift;
     my %params = @_;
-    my $shots = delete $params{shots} // 10000;
+    my $shots = delete $params{shots} // 202;
 
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     for (1 .. $shots) {
-        my @args = $generator->pick;
+        my $rand = Test::BangAway::CombinedMLCG->new;
+        my @args = $generator->pick($rand, ($_ - 1) % 101);
         unless ($code->(@args)) {
             Test::More::diag "Faild by following args: " .
                              Data::Dumper->new(\@args)->Terse(1)->Dump;
