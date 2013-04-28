@@ -2,6 +2,7 @@ package Test::BangAway::Generator;
 use strict;
 use warnings;
 use Exporter qw(import);
+use Config ();
 
 our @EXPORT = qw(
     gen const range elements list integer char string concat ref_hash ref_array
@@ -27,16 +28,31 @@ sub elements (@) {
 sub list ($;$$) {
     my $generator = shift;
     my ($min, $max) = @_;
-    (range $min // 0, $max // 9)->flat_map(sub {
+    $min //= 0;
+    $max //= 9;
+    gen {
+        my ($rand, $size) = @_;
+        my $width = int (($max - $min) * $size / 100);
+        $rand->next_int($min, $min + $width);
+    }->flat_map(sub {
         my $n = shift;
         gen {
-            my $rand = shift;
-            map { $generator->pick($rand->split) } 1 .. $n;
+            my ($rand, $size) = @_;
+            map { $generator->pick($rand->split, $size) } 1 .. $n;
         };
     });
 }
 
-sub integer () { range -100, 100 } # FIXME
+sub integer () {
+    gen {
+        my ($rand, $size) = @_;
+        return 0 if $size <= 0;
+
+        my $bits = int (($Config::Config{ivsize} * 8 - 1) * $size / 100);
+        my $n = 1 << $bits;
+        $rand->next_int(- $n, $n - 1);
+    };
+}
 
 sub char () { elements 'a' .. 'z', 'A' .. 'Z' }
 
@@ -48,8 +64,8 @@ sub string (;$$) {
 sub concat (@) {
     my @generators = @_;
     gen {
-        my $rand = shift;
-        map { $_->pick($rand->split) } @generators;
+        my ($rand, $size) = @_;
+        map { $_->pick($rand->split, $size) } @generators;
     };
 }
 
@@ -66,8 +82,8 @@ sub ref_array ($;$$) {
 }
 
 sub pick {
-    my ($self, $rand) = @_;
-    $self->($rand);
+    my ($self, $rand, $size) = @_;
+    $self->($rand, $size);
 }
 
 sub map {
@@ -78,9 +94,9 @@ sub map {
 sub flat_map {
     my ($self, $f) = @_;
     gen {
-        my $rand1 = shift;
+        my ($rand1, $size) = @_;
         my $rand2 = $rand1->split;
-        $f->($self->pick($rand1))->pick($rand2);
+        $f->($self->pick($rand1, $size))->pick($rand2, $size);
     };
 }
 
