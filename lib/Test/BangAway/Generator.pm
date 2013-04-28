@@ -16,7 +16,7 @@ sub const (@) { my @args = @_; gen { @args } }
 
 sub range ($$) {
     my ($min, $max) = @_;
-    gen { int (rand ($max - $min + 1)) + $min };
+    gen { $_[0]->next_int($min, $max) };
 }
 
 sub elements (@) {
@@ -29,7 +29,10 @@ sub list ($;$$) {
     my ($min, $max) = @_;
     (range $min // 0, $max // 9)->flat_map(sub {
         my $n = shift;
-        gen { map { $generator->pick } 1 .. $n };
+        gen {
+            my $rand = shift;
+            map { $generator->pick($rand->split) } 1 .. $n;
+        };
     });
 }
 
@@ -44,7 +47,10 @@ sub string (;$$) {
 
 sub concat (@) {
     my @generators = @_;
-    gen { map { $_->pick } @generators };
+    gen {
+        my $rand = shift;
+        map { $_->pick($rand->split) } @generators;
+    };
 }
 
 sub ref_hash ($$;$$) {
@@ -60,18 +66,22 @@ sub ref_array ($;$$) {
 }
 
 sub pick {
-    my $self = shift;
-    $self->();
+    my ($self, $rand) = @_;
+    $self->($rand);
 }
 
 sub map {
     my ($self, $f) = @_;
-    gen { $f->($self->pick) };
+    gen { $f->($self->pick(@_)) };
 }
 
 sub flat_map {
     my ($self, $f) = @_;
-    gen { $f->($self->pick)->pick };
+    gen {
+        my $rand1 = shift;
+        my $rand2 = $rand1->split;
+        $f->($self->pick($rand1))->pick($rand2);
+    };
 }
 
 1;
