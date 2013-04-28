@@ -20,6 +20,11 @@ sub new {
     } 0 .. $#{M()}] => $class;
 }
 
+sub clone {
+    my $self = shift;
+    (ref $self)->new(@$self);
+}
+
 sub next {
     my $self = shift;
 
@@ -55,7 +60,7 @@ sub next_int {
 sub split {
     my $self = shift;
 
-    my $other = (ref $self)->new(@$self);
+    my $other = $self->clone;
     $other->next;
 
     for my $j (0 .. $#{M()}) {
