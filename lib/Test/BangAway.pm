@@ -14,7 +14,7 @@ sub bang_away_ok (&$;@) {
     my $code = shift;
     my $generator = shift;
     my %params = @_;
-    my $shots = delete $params{shots} // 10000;
+    my $shots = delete $params{shots} // 100;
 
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     for (1 .. $shots) {
