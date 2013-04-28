@@ -37,6 +37,18 @@ sub next {
     return $z;
 }
 
+sub next_rand {
+    my $self = shift;
+    $self->next / M->[0];
+}
+
+sub next_int {
+    my $self = shift;
+    my ($min, $max) = @_ == 2 ? @_ : (0, @_);
+    ($min, $max) = ($max, $min) if $min > $max;
+    int($self->next_rand * ($max - $min + 1)) + $min;
+}
+
 sub split {
     my $self = shift;
 
