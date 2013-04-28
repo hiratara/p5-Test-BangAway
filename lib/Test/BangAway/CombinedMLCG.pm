@@ -14,7 +14,10 @@ use constant R => do {
 
 sub new {
     my $class = shift;
-    bless [@_] => $class;
+    bless [map {
+        my $seed = defined $_[$_] ? $_[$_] - 1 : int rand (M->[0] - 2);
+        $seed % (M->[0] - 1) + 1;
+    } 0 .. $#{M()}] => $class;
 }
 
 sub next {

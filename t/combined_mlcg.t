@@ -37,9 +37,9 @@ bang_away_ok {
     $mlcg1->next == $mlcg3->next && $mlcg2->next == $mlcg4->next;
 } concat(integer, integer);
 
-my $mlcg = Test::BangAway::CombinedMLCG->new(1, 1);
 bang_away_ok {
     my ($range1, $range2) = @_;
+    my $mlcg = Test::BangAway::CombinedMLCG->new;
     my $n = $mlcg->next_int($range1, $range2);
     my ($min, $max) = $range1 < $range2 ? ($range1, $range2)
                                         : ($range2, $range1);
