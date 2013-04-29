@@ -25,12 +25,16 @@ sub bang_away_ok (&$;@) {
 
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my $generator = $type->arbitrary->map(sub { scalar $code->(@_), [@_] });
+    my $rand = Test::BangAway::CombinedMLCG->new;
     for (1 .. $shots) {
-        my $rand = Test::BangAway::CombinedMLCG->new;
-        my ($is_success, $args) = $generator->pick($rand, ($_ - 1) % 101);
+        my $size = ($_ - 1) % 101;
+        my $cur_rand = $rand->split;
+        my ($is_success, $args) = $generator->pick($cur_rand->clone, $size);
         unless ($is_success) {
             Test::More::diag "Faild by following args: " .
-                                      Data::Dumper->new($args)->Terse(1)->Dump;
+                             Data::Dumper->new($args)->Terse(1)->Dump .
+                             sprintf ("Rerun by (%d, %d, %d)",
+                                      @$cur_rand, $size);
             return Test::More::ok 0 ;
         }
     }
