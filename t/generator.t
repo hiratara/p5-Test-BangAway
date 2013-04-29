@@ -63,4 +63,18 @@ bang_away_ok {
     length $f->($n) == 1 && $f->($n) eq $f->($n);
 } concat (function (integer (10, 20), char), integer (10, 20));
 
+my $type_int_char = concat (integer, char);
+bang_away_ok {
+    my ($f, $n, $c) = @_;
+    Scalar::Util::looks_like_number($f->($n, $c))
+                                               && $f->($n, $c) == $f->($n, $c);
+} concat (function ($type_int_char, integer), $type_int_char);
+
+my $type_int_char_enum = concat (integer, char, enum qw[True False]);
+bang_away_ok {
+    my ($f, $n, $c, $e) = @_;
+    Scalar::Util::looks_like_number($f->($n, $c, $e))
+                                       && $f->($n, $c, $e) == $f->($n, $c, $e);
+} concat (function ($type_int_char_enum, integer), $type_int_char_enum);
+
 done_testing;
