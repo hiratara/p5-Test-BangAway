@@ -57,9 +57,9 @@ sub ref_hash ($$;$$) {
 }
 
 sub ref_array ($;$$) {
-    my $list_type = list @_;
+    my ($type, $min, $max) = @_;
     Test::BangAway::Generator::Types::RefArray->new(
-        type => $list_type
+        min => $min, max => $max, type => $type
     );
 }
 

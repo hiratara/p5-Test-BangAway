@@ -7,14 +7,14 @@ use Class::Accessor::Lite (
     rw => [qw(_list_type)],
 );
 use Test::BangAway::Generator::Types::List;
-use Test::BangAway::Generator::Types::RefArray;
+use Test::BangAway::Generator::Types::Reference;
 use Test::BangAway::Generator::Types::Product;
 
 sub new {
     my $class = shift;
     my $self = $class->SUPER::new(@_);
 
-    my $kv = Test::BangAway::Generator::Types::RefArray->new(
+    my $kv = Test::BangAway::Generator::Types::Reference->new(
         type => product ($self->key_type, $self->value_type)
     );
     my $inner_type = list ($kv, $self->min, $self->max);
