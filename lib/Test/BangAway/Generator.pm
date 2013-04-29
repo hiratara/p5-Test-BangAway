@@ -2,42 +2,25 @@ package Test::BangAway::Generator;
 use strict;
 use warnings;
 use Exporter qw(import);
-use Config ();
 use Test::BangAway::Generator::Object;
+use Test::BangAway::Generator::Types;
 
 our @EXPORT = qw(
     enum list integer char string concat ref_hash ref_array
 );
 
-sub enum (@) { goto &elements }
+sub enum (@) {
+    Test::BangAway::Generator::Types::Enum->new(
+        items => [@_]
+    );
+}
 
-sub list ($;$$) {
-    my $generator = shift;
-    my ($min, $max) = @_;
-    $min //= 0;
-    $max //= 9;
-    gen {
-        my ($rand, $size) = @_;
-        my $width = int (($max - $min) * $size / 100);
-        $rand->next_int($min, $min + $width);
-    }->flat_map(sub {
-        my $n = shift;
-        gen {
-            my ($rand, $size) = @_;
-            map { $generator->pick($rand->split, $size) } 1 .. $n;
-        };
-    });
+sub list {
+    goto &Test::BangAway::Generator::Types::List::list;
 }
 
 sub _all_integer () {
-    gen {
-        my ($rand, $size) = @_;
-        return 0 if $size <= 0;
-
-        my $bits = int (($Config::Config{ivsize} * 8 - 1) * $size / 100);
-        my $n = 1 << $bits;
-        $rand->next_int(- $n, $n - 1);
-    };
+    Test::BangAway::Generator::Types::AllInteger->new;
 }
 
 sub integer (;$$) {
@@ -45,34 +28,39 @@ sub integer (;$$) {
 
     my ($min, $max) = @_ >= 2 ? @_ : (0, @_);
     ($min, $max) = ($max, $min) if $min > $max;
-    range $min, $max;
+    Test::BangAway::Generator::Types::Integer->new(
+        min => $min, max => $max
+    );
 }
 
-sub char () { elements 'a' .. 'z', 'A' .. 'Z' }
+sub char {
+    goto &Test::BangAway::Generator::Types::Char::char;
+}
 
 sub string (;$$) {
     my ($min, $max) = @_;
-    (list char, $min, $max)->map(sub {join '', @_});
+    Test::BangAway::Generator::Types::String->new(
+        min => $min, max => $max
+    );
 }
 
-sub concat (@) {
-    my @generators = @_;
-    gen {
-        my ($rand, $size) = @_;
-        map { $_->pick($rand->split, $size) } @generators;
-    };
+sub concat (@) { 
+    goto &Test::BangAway::Generator::Types::Product::product;
 }
 
 sub ref_hash ($$;$$) {
-    my ($key_generator, $value_generator, $item_min, $item_max) = @_;
-   list(
-       concat($key_generator, $value_generator), $item_min, $item_max
-   )->map(sub { +{@_} });
+    my ($key_type, $value_type, $min, $max) = @_;
+    Test::BangAway::Generator::Types::RefHash->new(
+        key_type => $key_type, value_type => $value_type,
+        min => $min, max => $max,
+    );
 }
 
 sub ref_array ($;$$) {
-    my ($generator, $min, $max) = @_;
-    list($generator, $min, $max)->map(sub { [@_] });
+    my ($type, $min, $max) = @_;
+    Test::BangAway::Generator::Types::RefArray->new(
+        min => $min, max => $max, type => $type
+    );
 }
 
 1;
