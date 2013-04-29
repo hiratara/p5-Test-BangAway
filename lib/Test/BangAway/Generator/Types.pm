@@ -4,8 +4,8 @@ use warnings;
 use UNIVERSAL::require;
 use Class::Accessor::Lite (new => 1);
 
-sub arbitrary { die "You should implement " . ref $_[0] . "::arbitrary" }
-sub coarbitrary { die "You should implement " . ref $_[0] . "::coarbitrary" }
+sub arbitrary { die "You should implement " . (ref $_[0]) . "::arbitrary" }
+sub coarbitrary { die "You should implement " . (ref $_[0]) . "::coarbitrary" }
 
 sub import {
     # Load all subclasses
