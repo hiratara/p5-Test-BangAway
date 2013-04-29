@@ -2,102 +2,72 @@ package Test::BangAway::Generator;
 use strict;
 use warnings;
 use Exporter qw(import);
-use Config ();
+use Test::BangAway::Generator::Object;
+use Test::BangAway::Generator::Types;
 
 our @EXPORT = qw(
-    gen const range elements list integer char string concat ref_hash ref_array
+    enum list integer char string concat ref_hash ref_array function
 );
 
-sub gen (&) {
-    my $code = shift;
-    bless $code => __PACKAGE__;
+sub enum (@) {
+    Test::BangAway::Generator::Types::Enum->new(
+        items => [@_]
+    );
 }
 
-sub const (@) { my @args = @_; gen { @args } }
-
-sub range ($$) {
-    my ($min, $max) = @_;
-    gen { $_[0]->next_int($min, $max) };
+sub list {
+    goto &Test::BangAway::Generator::Types::List::list;
 }
 
-sub elements (@) {
-    my $ref_elems = \@_;
-    (range 0, $#$ref_elems)->map(sub { $ref_elems->[shift] });
+sub _all_integer () {
+    Test::BangAway::Generator::Types::AllInteger->new;
 }
 
-sub list ($;$$) {
-    my $generator = shift;
-    my ($min, $max) = @_;
-    $min //= 0;
-    $max //= 9;
-    gen {
-        my ($rand, $size) = @_;
-        my $width = int (($max - $min) * $size / 100);
-        $rand->next_int($min, $min + $width);
-    }->flat_map(sub {
-        my $n = shift;
-        gen {
-            my ($rand, $size) = @_;
-            map { $generator->pick($rand->split, $size) } 1 .. $n;
-        };
-    });
+sub integer (;$$) {
+    goto &_all_integer if @_ == 0;
+
+    my ($min, $max) = @_ >= 2 ? @_ : (0, @_);
+    ($min, $max) = ($max, $min) if $min > $max;
+    Test::BangAway::Generator::Types::Integer->new(
+        min => $min, max => $max
+    );
 }
 
-sub integer () {
-    gen {
-        my ($rand, $size) = @_;
-        return 0 if $size <= 0;
-
-        my $bits = int (($Config::Config{ivsize} * 8 - 1) * $size / 100);
-        my $n = 1 << $bits;
-        $rand->next_int(- $n, $n - 1);
-    };
+sub char {
+    goto &Test::BangAway::Generator::Types::Char::char;
 }
-
-sub char () { elements 'a' .. 'z', 'A' .. 'Z' }
 
 sub string (;$$) {
     my ($min, $max) = @_;
-    (list char, $min, $max)->map(sub {join '', @_});
+    Test::BangAway::Generator::Types::String->new(
+        min => $min, max => $max
+    );
 }
 
-sub concat (@) {
-    my @generators = @_;
-    gen {
-        my ($rand, $size) = @_;
-        map { $_->pick($rand->split, $size) } @generators;
-    };
+sub concat (@) { 
+    goto &Test::BangAway::Generator::Types::Product::product;
 }
 
 sub ref_hash ($$;$$) {
-    my ($key_generator, $value_generator, $item_min, $item_max) = @_;
-   list(
-       concat($key_generator, $value_generator), $item_min, $item_max
-   )->map(sub { +{@_} });
+    my ($key_type, $value_type, $min, $max) = @_;
+    Test::BangAway::Generator::Types::RefHash->new(
+        key_type => $key_type, value_type => $value_type,
+        min => $min, max => $max,
+    );
 }
 
 sub ref_array ($;$$) {
-    my ($generator, $min, $max) = @_;
-    list($generator, $min, $max)->map(sub { [@_] });
+    my $list_type = list @_;
+    Test::BangAway::Generator::Types::RefArray->new(
+        type => $list_type
+    );
 }
 
-sub pick {
-    my ($self, $rand, $size) = @_;
-    $self->($rand, $size);
-}
-
-sub map {
-    my ($self, $f) = @_;
-    gen { $f->($self->pick(@_)) };
-}
-
-sub flat_map {
-    my ($self, $f) = @_;
-    gen {
-        my ($rand1, $size) = @_;
-        my $rand2 = $rand1->split;
-        $f->($self->pick($rand1, $size))->pick($rand2, $size);
-    };
+sub function ($$) {
+    my ($dom, $cod) = @_;
+    Test::BangAway::Generator::Types::Function->new(
+        dom => $dom, cod => $cod
+    );
 }
 
 1;
