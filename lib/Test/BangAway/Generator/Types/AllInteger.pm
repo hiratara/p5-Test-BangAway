@@ -16,4 +16,9 @@ sub arbitrary {
     };
 }
 
+sub coarbitrary {
+    my ($self, $generator, $n) = @_;
+    variant $n, $generator;
+}
+
 1;

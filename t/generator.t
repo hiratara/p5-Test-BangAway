@@ -1,5 +1,6 @@
 use strict;
 use warnings;
+use Scalar::Util ();
 use Test::BangAway;
 use Test::BangAway::Generator;
 use Test::More;
@@ -30,5 +31,16 @@ bang_away_ok {
         string() => ref_array(enum qw(True False))
     ), 5, 10
 );
+
+bang_away_ok {
+    my ($f, $x) = @_;
+    Scalar::Util::looks_like_number($f->($x)) && $f->($x) == $f->($x);
+} concat (function (integer, integer), integer);
+
+bang_away_ok {
+    my ($f, $x, $y) = @_;
+    Scalar::Util::looks_like_number($f->($x)->($y))
+                                           && $f->($x)->($y) == $f->($x)->($y);
+} concat (function (integer, function (integer, integer)), integer, integer);
 
 done_testing;

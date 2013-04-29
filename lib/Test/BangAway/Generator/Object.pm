@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Exporter qw(import);
 our @EXPORT = qw(
-    gen const range elements
+    gen const range elements variant
 );
 
 sub gen (&) {
@@ -16,6 +16,25 @@ sub const (@) { my @args = @_; gen { @args } }
 sub range ($$) {
     my ($min, $max) = @_;
     gen { $_[0]->next_int($min, $max) };
+}
+
+sub variant ($$) {
+    my ($n, $generator) = @_;
+    gen {
+        use integer;
+        my ($rand, $size) = @_;
+
+        my ($i, $next_i, $cur_rand) = ($n, $n / 2, $rand);
+        while ($i != $next_i) {
+            my $another = $cur_rand->split;
+            $cur_rand = $another if $i % 2 == 0;
+
+            $i = $next_i;
+            $next_i /= 2;
+        }
+
+        $generator->($cur_rand, $size);
+    };
 }
 
 sub elements (@) {

@@ -6,7 +6,7 @@ use Test::BangAway::Generator::Object;
 use Test::BangAway::Generator::Types;
 
 our @EXPORT = qw(
-    enum list integer char string concat ref_hash ref_array
+    enum list integer char string concat ref_hash ref_array function
 );
 
 sub enum (@) {
@@ -60,6 +60,13 @@ sub ref_array ($;$$) {
     my ($type, $min, $max) = @_;
     Test::BangAway::Generator::Types::RefArray->new(
         min => $min, max => $max, type => $type
+    );
+}
+
+sub function ($$) {
+    my ($dom, $cod) = @_;
+    Test::BangAway::Generator::Types::Function->new(
+        dom => $dom, cod => $cod
     );
 }
 
