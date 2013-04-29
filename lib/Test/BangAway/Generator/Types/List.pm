@@ -35,4 +35,11 @@ sub arbitrary {
     });
 }
 
+sub coarbitrary {
+    my ($self, $generator, @xs) = @_;
+    $generator = variant (-1, $self->type->coarbitrary($generator, $_))
+                                                                       for @xs;
+    variant (0, $generator);
+}
+
 1;
