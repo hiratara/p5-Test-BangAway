@@ -77,4 +77,10 @@ bang_away_ok {
                                        && $f->($n, $c, $e) == $f->($n, $c, $e);
 } concat (function ($type_int_char_enum, integer), $type_int_char_enum);
 
+bang_away_ok {
+    my ($f, $ref_array) = @_;
+    ref $f->($ref_array) eq 'HASH'
+                                 && eq_hash $f->($ref_array), $f->($ref_array);
+} concat (function (ref_array (char), ref_hash (char, char)), ref_array char);
+
 done_testing;
