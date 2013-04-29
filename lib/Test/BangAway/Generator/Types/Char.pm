@@ -11,4 +11,9 @@ sub char () { Test::BangAway::Generator::Types::Char->new }
 
 sub arbitrary { elements 'a' .. 'z', 'A' .. 'Z' }
 
+sub coarbitrary {
+    my ($self, $generator, $c) = @_;
+    variant (ord $c, $generator);
+}
+
 1;

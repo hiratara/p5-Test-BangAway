@@ -48,4 +48,9 @@ bang_away_ok {
     Scalar::Util::looks_like_number($f->(@x)) && $f->(@x) == $f->(@x);
 } concat (function(list(integer), integer), list integer);
 
+bang_away_ok {
+    my ($f, $c) = @_;
+    length $c == 1 && $f->($c) eq $f->($c);
+} concat (function(char, char), char);
+
 done_testing;
