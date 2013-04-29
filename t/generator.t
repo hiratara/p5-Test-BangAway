@@ -95,4 +95,6 @@ bang_away_ok {
 } concat (function (ref_hash (char, char), ref_array (integer)),
                                                         ref_hash (char, char));
 
+ok Scalar::Util::looks_like_number $_->[0] for integer->sample;
+
 done_testing;

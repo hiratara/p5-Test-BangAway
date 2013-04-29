@@ -3,9 +3,16 @@ use strict;
 use warnings;
 use UNIVERSAL::require;
 use Class::Accessor::Lite (new => 1);
+use Test::BangAway::CombinedMLCG;
 
 sub arbitrary { die "You should implement " . (ref $_[0]) . "::arbitrary" }
 sub coarbitrary { die "You should implement " . (ref $_[0]) . "::coarbitrary" }
+
+sub sample {
+    my $self = shift;
+    my $rand = Test::BangAway::CombinedMLCG->new;
+    map { [$self->arbitrary->pick($rand, $_)] } 0 .. 19;
+}
 
 sub import {
     my ($class) = @_;
