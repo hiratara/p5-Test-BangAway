@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Data::Dumper;
 use Exporter qw(import);
+use Test::BangAway::Generator;
 use Test::BangAway::CombinedMLCG;
 use Test::More ();
 use 5.008_005;
@@ -13,6 +14,12 @@ our @EXPORT = qw(bang_away_ok);
 sub bang_away_ok (&$;@) {
     my $code = shift;
     my $type = shift;
+
+    my @types;
+    push @types, shift
+                 while eval { $_[0]->isa("Test::BangAway::Generator::Types") };
+    $type = concat ($type, @types) if @types;
+
     my %params = @_;
     my $shots = delete $params{shots} // 202;
 
