@@ -11,8 +11,8 @@ sub arbitrary {
 }
 
 sub coarbitrary {
-    my ($self, $generator, $ref_array) = @_;
-    $self->type->coarbitrary($generator, @$ref_array);
+    my ($self, $generator, $array_ref) = @_;
+    $self->type->coarbitrary($generator, @$array_ref);
 }
 
 1;

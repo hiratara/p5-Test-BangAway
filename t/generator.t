@@ -16,19 +16,19 @@ bang_away_ok {
 bang_away_ok {
     my $hash = shift;
     ref $hash eq 'HASH' && ! grep { $_ < 50 || 60 < $_ } values %$hash;
-} ref_hash string(10, 15), integer(50, 60), 5, 10;
+} hash_ref string(10, 15), integer(50, 60), 5, 10;
 
 bang_away_ok {
     my $array = shift;
     ref $array eq 'ARRAY' && ! grep { ! /^[a-z]$/ } @$array;
-} ref_array(enum('a' .. 'z'), 5, 10);
+} array_ref(enum('a' .. 'z'), 5, 10);
 
 bang_away_ok {
     my $data = shift;
     ref $data eq 'ARRAY' && ! grep { ! ref $_ eq 'HASH' } @$data;
-} ref_array(
-    ref_hash(
-        string() => ref_array(enum qw(True False))
+} array_ref(
+    hash_ref(
+        string() => array_ref(enum qw(True False))
     ), 5, 10
 );
 
@@ -78,10 +78,10 @@ bang_away_ok {
 } concat (function ($type_int_char_enum, integer), $type_int_char_enum);
 
 bang_away_ok {
-    my ($f, $ref_array) = @_;
-    ref $f->($ref_array) eq 'HASH'
-                                 && eq_hash $f->($ref_array), $f->($ref_array);
-} concat (function (ref_array (char), ref_hash (char, char)), ref_array char);
+    my ($f, $array_ref) = @_;
+    ref $f->($array_ref) eq 'HASH'
+                                 && eq_hash $f->($array_ref), $f->($array_ref);
+} concat (function (array_ref (char), hash_ref (char, char)), array_ref char);
 
 bang_away_ok {
     my ($f, $str) = @_;
@@ -89,11 +89,11 @@ bang_away_ok {
 } concat (function (string, integer), string);
 
 bang_away_ok {
-    my ($f, $ref_hash) = @_;
-    ref $f->($ref_hash) eq 'ARRAY'
-                                  && eq_array $f->($ref_hash), $f->($ref_hash);
-} concat (function (ref_hash (char, char), ref_array (integer)),
-                                                        ref_hash (char, char));
+    my ($f, $hash_ref) = @_;
+    ref $f->($hash_ref) eq 'ARRAY'
+                                  && eq_array $f->($hash_ref), $f->($hash_ref);
+} concat (function (hash_ref (char, char), array_ref (integer)),
+                                                        hash_ref (char, char));
 
 ok Scalar::Util::looks_like_number $_->[0] for integer->sample;
 

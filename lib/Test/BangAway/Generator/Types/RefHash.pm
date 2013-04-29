@@ -1,4 +1,4 @@
-package Test::BangAway::Generator::Types::RefHash;
+package Test::BangAway::Generator::Types::HashRef;
 use strict;
 use warnings;
 use parent "Test::BangAway::Generator::Types";
@@ -28,9 +28,9 @@ sub arbitrary {
 }
 
 sub coarbitrary {
-    my ($self, $generator, $ref_hash) = @_;
+    my ($self, $generator, $hash_ref) = @_;
     $self->_list_type->coarbitrary(
-        $generator, map { [$_ => $ref_hash->{$_}] } keys %$ref_hash
+        $generator, map { [$_ => $hash_ref->{$_}] } keys %$hash_ref
     );
 }
 

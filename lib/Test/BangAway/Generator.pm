@@ -6,7 +6,7 @@ use Test::BangAway::Generator::Object;
 use Test::BangAway::Generator::Types;
 
 our @EXPORT = qw(
-    enum list integer char string concat ref_hash ref_array function
+    enum list integer char string concat hash_ref array_ref function
 );
 
 sub enum (@) {
@@ -48,17 +48,17 @@ sub concat (@) {
     goto &Test::BangAway::Generator::Types::Product::product;
 }
 
-sub ref_hash ($$;$$) {
+sub hash_ref ($$;$$) {
     my ($key_type, $value_type, $min, $max) = @_;
-    Test::BangAway::Generator::Types::RefHash->new(
+    Test::BangAway::Generator::Types::HashRef->new(
         key_type => $key_type, value_type => $value_type,
         min => $min, max => $max,
     );
 }
 
-sub ref_array ($;$$) {
+sub array_ref ($;$$) {
     my ($type, $min, $max) = @_;
-    Test::BangAway::Generator::Types::RefArray->new(
+    Test::BangAway::Generator::Types::ArrayRef->new(
         min => $min, max => $max, type => $type
     );
 }
@@ -83,9 +83,9 @@ Test::BangAway::Generator - Tools to build a generator of random values
 
   use Test::BangAway::Generator;
 
-  my $data_generator = ref_array(
-      ref_hash(
-          string() => ref_array(elements qw(True False))
+  my $data_generator = array_ref(
+      hash_ref(
+          string() => array_ref(elements qw(True False))
       ), 5, 10
   );
   # This generator yields values like following:
@@ -138,7 +138,7 @@ A generator which generates values of primitive types.
 A generator which generates a list of values.
 The generated list has fixed length which is the # of generators.
 
-=item C<<ref_hash $key_gen, $val_gen, 3, 5;>>
+=item C<<hash_ref $key_gen, $val_gen, 3, 5;>>
 
 A generator which returns an hash-ref.
 Keys are produced by $key_gen and values are produced by $val_gen;
@@ -146,7 +146,7 @@ $key_gen should return one string value. On the other hand, $value_gen should
 return just one value, but the value doesn't have to be string.
 Any types of values are O.K.
 
-=item C<<ref_array $gen, 3, 5;>>
+=item C<<array_ref $gen, 3, 5;>>
 
 A generator which returns an array-ref of values by using specified $gen.
 The generated array-ref will have length from min(e.g. 3) to max(e.g. 5).

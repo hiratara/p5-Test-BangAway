@@ -1,4 +1,4 @@
-package Test::BangAway::Generator::Types::RefArray;
+package Test::BangAway::Generator::Types::ArrayRef;
 use strict;
 use warnings;
 use parent "Test::BangAway::Generator::Types";
