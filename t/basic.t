@@ -10,7 +10,7 @@ test_test "just bang away";
 
 test_out "not ok 1";
 test_fail(+1);
-bang_away_ok { 50 <= $_[0] && $_[0] <= 100 ? 0 : 1 } integer;
+bang_away_ok { 8 <= $_[0] && $_[0] <= 128 ? 0 : 1 } integer;
 test_test title => "punch out the bug",
           skip_err => 1;
 
