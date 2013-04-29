@@ -88,4 +88,11 @@ bang_away_ok {
     Scalar::Util::looks_like_number($f->($str)) && $f->($str) == $f->($str);
 } concat (function (string, integer), string);
 
+bang_away_ok {
+    my ($f, $ref_hash) = @_;
+    ref $f->($ref_hash) eq 'ARRAY'
+                                  && eq_array $f->($ref_hash), $f->($ref_hash);
+} concat (function (ref_hash (char, char), ref_array (integer)),
+                                                        ref_hash (char, char));
+
 done_testing;
