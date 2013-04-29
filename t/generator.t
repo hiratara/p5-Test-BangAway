@@ -58,4 +58,9 @@ bang_away_ok {
     $f->($item) =~ /^[xyz]$/ && $f->($item) eq $f->($item);
 } concat (function (enum (qw[a b c]), enum (qw[x y z])), enum (qw[a b c]));
 
+bang_away_ok {
+    my ($f, $n) = @_;
+    length $f->($n) == 1 && $f->($n) eq $f->($n);
+} concat (function (integer (10, 20), char), integer (10, 20));
+
 done_testing;

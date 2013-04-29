@@ -10,4 +10,9 @@ sub arbitrary {
     range ($self->min, $self->max);
 }
 
+sub coarbitrary {
+    my ($self, $generator, $n) = @_;
+    variant ($n, $generator);
+}
+
 1;
