@@ -50,7 +50,7 @@ bang_away_ok {
 
 bang_away_ok {
     my ($f, $c) = @_;
-    length $c == 1 && $f->($c) eq $f->($c);
+    length $f->($c) == 1 && $f->($c) eq $f->($c);
 } concat (function(char, char), char);
 
 bang_away_ok {
