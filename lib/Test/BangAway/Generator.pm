@@ -3,27 +3,13 @@ use strict;
 use warnings;
 use Exporter qw(import);
 use Config ();
+use Test::BangAway::Generator::Object;
 
 our @EXPORT = qw(
-    gen const range elements list integer char string concat ref_hash ref_array
+    enum list integer char string concat ref_hash ref_array
 );
 
-sub gen (&) {
-    my $code = shift;
-    bless $code => __PACKAGE__;
-}
-
-sub const (@) { my @args = @_; gen { @args } }
-
-sub range ($$) {
-    my ($min, $max) = @_;
-    gen { $_[0]->next_int($min, $max) };
-}
-
-sub elements (@) {
-    my $ref_elems = \@_;
-    (range 0, $#$ref_elems)->map(sub { $ref_elems->[shift] });
-}
+sub enum (@) { goto &elements }
 
 sub list ($;$$) {
     my $generator = shift;
@@ -43,7 +29,7 @@ sub list ($;$$) {
     });
 }
 
-sub integer () {
+sub _all_integer () {
     gen {
         my ($rand, $size) = @_;
         return 0 if $size <= 0;
@@ -52,6 +38,14 @@ sub integer () {
         my $n = 1 << $bits;
         $rand->next_int(- $n, $n - 1);
     };
+}
+
+sub integer (;$$) {
+    goto &_all_integer if @_ == 0;
+
+    my ($min, $max) = @_ >= 2 ? @_ : (0, @_);
+    ($min, $max) = ($max, $min) if $min > $max;
+    range $min, $max;
 }
 
 sub char () { elements 'a' .. 'z', 'A' .. 'Z' }
@@ -79,25 +73,6 @@ sub ref_hash ($$;$$) {
 sub ref_array ($;$$) {
     my ($generator, $min, $max) = @_;
     list($generator, $min, $max)->map(sub { [@_] });
-}
-
-sub pick {
-    my ($self, $rand, $size) = @_;
-    $self->($rand, $size);
-}
-
-sub map {
-    my ($self, $f) = @_;
-    gen { $f->($self->pick(@_)) };
-}
-
-sub flat_map {
-    my ($self, $f) = @_;
-    gen {
-        my ($rand1, $size) = @_;
-        my $rand2 = $rand1->split;
-        $f->($self->pick($rand1, $size))->pick($rand2, $size);
-    };
 }
 
 1;
