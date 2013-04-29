@@ -10,7 +10,7 @@ sub arbitrary {
     my $generator = $self->cod->arbitrary;
     gen {
         my ($rand, $size) = @_;
-        my $freezed = $rand->clone;
+        my $freezed = $rand->split;
         sub {
             my @x = @_;
             my $fixed_generator = $self->dom->coarbitrary($generator, @x);
