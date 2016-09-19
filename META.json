@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : 2
    },
-   "name" : "Test-BangAway",
+   "name" : "Test-RandomCheck",
    "no_index" : {
       "directory" : [
          "eg",
@@ -52,13 +52,13 @@
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/hiratara/p5-Test-BangAway/issues"
+         "web" : "https://github.com/hiratara/p5-Test-RandomCheck/issues"
       },
-      "homepage" : "https://github.com/hiratara/p5-Test-BangAway",
+      "homepage" : "https://github.com/hiratara/p5-Test-RandomCheck",
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/hiratara/p5-Test-BangAway.git",
-         "web" : "https://github.com/hiratara/p5-Test-BangAway"
+         "url" : "https://github.com/hiratara/p5-Test-RandomCheck.git",
+         "web" : "https://github.com/hiratara/p5-Test-RandomCheck"
       }
    },
    "version" : "0.01",

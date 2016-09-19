@@ -1,4 +1,4 @@
-package Test::BangAway::Generator::Object;
+package Test::RandomCheck::Generator::Object;
 use strict;
 use warnings;
 use Exporter qw(import);

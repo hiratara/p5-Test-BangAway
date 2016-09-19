@@ -1,9 +1,9 @@
-package Test::BangAway::Generator::Types::Function;
+package Test::RandomCheck::Generator::Types::Function;
 use strict;
 use warnings;
-use parent "Test::BangAway::Generator::Types";
+use parent "Test::RandomCheck::Generator::Types";
 use Class::Accessor::Lite (ro => [qw(dom cod)]);
-use Test::BangAway::Generator::Object;
+use Test::RandomCheck::Generator::Object;
 
 sub arbitrary {
     my $self = shift;

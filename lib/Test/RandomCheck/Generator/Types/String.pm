@@ -1,10 +1,10 @@
-package Test::BangAway::Generator::Types::String;
+package Test::RandomCheck::Generator::Types::String;
 use strict;
 use warnings;
-use parent "Test::BangAway::Generator::Types";
+use parent "Test::RandomCheck::Generator::Types";
 use Class::Accessor::Lite (ro => [qw(min max)], rw => ['_list_type']);
-use Test::BangAway::Generator::Types::List qw(list);
-use Test::BangAway::Generator::Types::Char qw(char);
+use Test::RandomCheck::Generator::Types::List qw(list);
+use Test::RandomCheck::Generator::Types::Char qw(char);
 
 sub new {
     my $class = shift;

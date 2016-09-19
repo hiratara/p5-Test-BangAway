@@ -1,4 +1,4 @@
-package Test::BangAway::CombinedMLCG;
+package Test::RandomCheck::CombinedMLCG;
 use strict;
 use warnings;
 use constant M => [2147483563, 2147483399];

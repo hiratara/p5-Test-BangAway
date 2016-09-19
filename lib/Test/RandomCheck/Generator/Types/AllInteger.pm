@@ -1,9 +1,9 @@
-package Test::BangAway::Generator::Types::AllInteger;
+package Test::RandomCheck::Generator::Types::AllInteger;
 use strict;
 use warnings;
-use parent "Test::BangAway::Generator::Types";
+use parent "Test::RandomCheck::Generator::Types";
 use Config ();
-use Test::BangAway::Generator::Object;
+use Test::RandomCheck::Generator::Object;
 
 sub arbitrary {
     gen {

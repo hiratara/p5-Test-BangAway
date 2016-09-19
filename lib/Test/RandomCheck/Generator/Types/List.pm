@@ -1,10 +1,10 @@
-package Test::BangAway::Generator::Types::List;
+package Test::RandomCheck::Generator::Types::List;
 use strict;
 use warnings;
-use parent "Test::BangAway::Generator::Types";
+use parent "Test::RandomCheck::Generator::Types";
 use Class::Accessor::Lite (ro => [qw(min max type)]);
 use Exporter qw(import);
-use Test::BangAway::Generator::Object;
+use Test::RandomCheck::Generator::Object;
 
 our @EXPORT = qw(list);
 
@@ -13,7 +13,7 @@ sub list ($;$$) {
     my ($min, $max) = @_;
     $min //= 0;
     $max //= 9;
-    Test::BangAway::Generator::Types::List->new(
+    Test::RandomCheck::Generator::Types::List->new(
         type => $type, min => $min, max => $max
     );
 }

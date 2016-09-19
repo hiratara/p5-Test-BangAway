@@ -1,16 +1,16 @@
-package Test::BangAway::Generator::Types::Product;
+package Test::RandomCheck::Generator::Types::Product;
 use strict;
 use warnings;
-use parent "Test::BangAway::Generator::Types";
+use parent "Test::RandomCheck::Generator::Types";
 use Class::Accessor::Lite (ro => [qw(types)]);
 use Exporter qw(import);
-use Test::BangAway::Generator::Types::AllInteger;
-use Test::BangAway::Generator::Object;
+use Test::RandomCheck::Generator::Types::AllInteger;
+use Test::RandomCheck::Generator::Object;
 
 our @EXPORT = qw(product);
 
 sub product (@) {
-    Test::BangAway::Generator::Types::Product->new(
+    Test::RandomCheck::Generator::Types::Product->new(
         types => [@_]
     );
 }
@@ -25,7 +25,7 @@ sub arbitrary {
 
 sub coarbitrary {
     my ($self, $generator, @xs) = @_;
-    my $integer = Test::BangAway::Generator::Types::AllInteger->new;
+    my $integer = Test::RandomCheck::Generator::Types::AllInteger->new;
     $integer->arbitrary->flat_map(sub {
         my $n = shift;
         my $new_generator = $self->types->[0]

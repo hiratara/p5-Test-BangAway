@@ -1,20 +1,20 @@
-package Test::BangAway::Generator::Types::HashRef;
+package Test::RandomCheck::Generator::Types::HashRef;
 use strict;
 use warnings;
-use parent "Test::BangAway::Generator::Types";
+use parent "Test::RandomCheck::Generator::Types";
 use Class::Accessor::Lite (
     ro => [qw(min max key_type value_type)],
     rw => [qw(_list_type)],
 );
-use Test::BangAway::Generator::Types::List;
-use Test::BangAway::Generator::Types::Reference;
-use Test::BangAway::Generator::Types::Product;
+use Test::RandomCheck::Generator::Types::List;
+use Test::RandomCheck::Generator::Types::Reference;
+use Test::RandomCheck::Generator::Types::Product;
 
 sub new {
     my $class = shift;
     my $self = $class->SUPER::new(@_);
 
-    my $kv = Test::BangAway::Generator::Types::Reference->new(
+    my $kv = Test::RandomCheck::Generator::Types::Reference->new(
         type => product ($self->key_type, $self->value_type)
     );
     my $inner_type = list ($kv, $self->min, $self->max);

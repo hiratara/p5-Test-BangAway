@@ -1,9 +1,9 @@
-package Test::BangAway::Generator::Types::Reference;
+package Test::RandomCheck::Generator::Types::Reference;
 use strict;
 use warnings;
-use parent "Test::BangAway::Generator::Types";
+use parent "Test::RandomCheck::Generator::Types";
 use Class::Accessor::Lite (ro => [qw(type)]);
-use Test::BangAway::Generator::Types::List;
+use Test::RandomCheck::Generator::Types::List;
 
 sub arbitrary {
     my $self = shift;

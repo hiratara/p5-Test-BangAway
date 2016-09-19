@@ -1,26 +1,26 @@
-package Test::BangAway::Generator;
+package Test::RandomCheck::Generator;
 use strict;
 use warnings;
 use Exporter qw(import);
-use Test::BangAway::Generator::Object;
-use Test::BangAway::Generator::Types;
+use Test::RandomCheck::Generator::Object;
+use Test::RandomCheck::Generator::Types;
 
 our @EXPORT = qw(
     enum list integer char string concat hash_ref array_ref function
 );
 
 sub enum (@) {
-    Test::BangAway::Generator::Types::Enum->new(
+    Test::RandomCheck::Generator::Types::Enum->new(
         items => [@_]
     );
 }
 
 sub list {
-    goto &Test::BangAway::Generator::Types::List::list;
+    goto &Test::RandomCheck::Generator::Types::List::list;
 }
 
 sub _all_integer () {
-    Test::BangAway::Generator::Types::AllInteger->new;
+    Test::RandomCheck::Generator::Types::AllInteger->new;
 }
 
 sub integer (;$$) {
@@ -28,29 +28,29 @@ sub integer (;$$) {
 
     my ($min, $max) = @_ >= 2 ? @_ : (0, @_);
     ($min, $max) = ($max, $min) if $min > $max;
-    Test::BangAway::Generator::Types::Integer->new(
+    Test::RandomCheck::Generator::Types::Integer->new(
         min => $min, max => $max
     );
 }
 
 sub char {
-    goto &Test::BangAway::Generator::Types::Char::char;
+    goto &Test::RandomCheck::Generator::Types::Char::char;
 }
 
 sub string (;$$) {
     my ($min, $max) = @_;
-    Test::BangAway::Generator::Types::String->new(
+    Test::RandomCheck::Generator::Types::String->new(
         min => $min, max => $max
     );
 }
 
 sub concat (@) { 
-    goto &Test::BangAway::Generator::Types::Product::product;
+    goto &Test::RandomCheck::Generator::Types::Product::product;
 }
 
 sub hash_ref ($$;$$) {
     my ($key_type, $value_type, $min, $max) = @_;
-    Test::BangAway::Generator::Types::HashRef->new(
+    Test::RandomCheck::Generator::Types::HashRef->new(
         key_type => $key_type, value_type => $value_type,
         min => $min, max => $max,
     );
@@ -58,14 +58,14 @@ sub hash_ref ($$;$$) {
 
 sub array_ref ($;$$) {
     my ($type, $min, $max) = @_;
-    Test::BangAway::Generator::Types::ArrayRef->new(
+    Test::RandomCheck::Generator::Types::ArrayRef->new(
         min => $min, max => $max, type => $type
     );
 }
 
 sub function ($$) {
     my ($dom, $cod) = @_;
-    Test::BangAway::Generator::Types::Function->new(
+    Test::RandomCheck::Generator::Types::Function->new(
         dom => $dom, cod => $cod
     );
 }
@@ -77,11 +77,11 @@ __END__
 
 =head1 NAME
 
-Test::BangAway::Generator - Tools to build a generator of random values
+Test::RandomCheck::Generator - Tools to build a generator of random values
 
 =head1 SYNOPSIS
 
-  use Test::BangAway::Generator;
+  use Test::RandomCheck::Generator;
 
   my $data_generator = array_ref(
       hash_ref(
@@ -96,8 +96,8 @@ Test::BangAway::Generator - Tools to build a generator of random values
 
 =head1 DESCRIPTION
 
-Test::BangAway::Generator is a combinator to build random value generators
-used by L<Test::BangAway>.
+Test::RandomCheck::Generator is a combinator to build random value generators
+used by L<Test::RandomCheck>.
 
 =head1 COMBINATORS
 
@@ -173,7 +173,7 @@ A kleisli composition to apply kleisli allows to a Generator instance.
 
 =head1 SEE ALSO
 
-L<Test::BangAway>
+L<Test::RandomCheck>
 
 =head1 AUTHOR
 
