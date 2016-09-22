@@ -4,7 +4,7 @@ use warnings;
 use Data::Dumper;
 use Exporter qw(import);
 use Test::RandomCheck::Generator;
-use Test::RandomCheck::CombinedMLCG;
+use Test::RandomCheck::PRNG;
 use Test::More ();
 use 5.008_005;
 use constant DEBUG => $ENV{RANDOMCHECK_DEBUG};
@@ -37,7 +37,7 @@ sub random_ok (&$;@) {
 
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my $generator = $type->arbitrary->map(sub { scalar $code->(@_), [@_] });
-    my $rand = Test::RandomCheck::CombinedMLCG->new;
+    my $rand = Test::RandomCheck::PRNG->new;
     for (1 .. $shots) {
         my $size = ($_ - 1) % 101;
         my $cur_rand = $rand->split;

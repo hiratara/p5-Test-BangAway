@@ -11,10 +11,13 @@ sub arbitrary {
     gen {
         my ($rand, $size) = @_;
         my $freezed = $rand->split;
+
+        my %results;
         sub {
-            my @x = @_;
-            my $fixed_generator = $self->dom->coarbitrary($generator, @x);
-            $fixed_generator->pick($freezed->clone, $size);
+            my $id = join '\0', @_;
+            # TODO: We need not to use coarbitrarity no longer
+            my $fixed_generator = $self->dom->coarbitrary($generator, @_);
+            $results{$id} //= $fixed_generator->pick($freezed->clone, $size);
         };
     };
 }
