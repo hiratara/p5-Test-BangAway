@@ -23,20 +23,15 @@ sub arbitrary {
     };
 }
 
-sub coarbitrary {
-    my ($self, $generator, @xs) = @_;
-    my $integer = Test::RandomCheck::Generator::Types::AllInteger->new;
-    $integer->arbitrary->flat_map(sub {
-        my $n = shift;
-        my $new_generator = $self->types->[0]
-                                 ->coarbitrary($generator, $xs[0]);
-        for my $i (1 .. $#{$self->types}) {
-            $new_generator = $self->types->[$i]
-                                  ->coarbitrary($new_generator, $xs[$i]);
-            $new_generator = variant ($n, $new_generator);
-        }
-        $new_generator;
-    });
+sub memoize_key {
+    my ($self, @xs) = @_;
+
+    my @keys;
+    for my $i (1 .. $#{$self->types}) {
+        push @keys, $self->types->[$i]->memoize_key($xs[$i]);
+    }
+
+    join '\0', @keys;
 }
 
 1;

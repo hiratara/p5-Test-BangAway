@@ -44,6 +44,11 @@ random_ok {
 } function (integer, function (integer, integer)), integer, integer;
 
 random_ok {
+    my ($f, $g) = @_;
+    Scalar::Util::looks_like_number($f->($g)) && $f->($g) == $f->($g);
+} function (function (integer, integer), integer), function (integer, integer);
+
+random_ok {
     my ($f, @x) = @_;
     Scalar::Util::looks_like_number($f->(@x)) && $f->(@x) == $f->(@x);
 } function(list(integer), integer), list integer;

@@ -18,9 +18,9 @@ sub arbitrary {
     $self->_list_type->arbitrary->map(sub {join '', @_});
 }
 
-sub coarbitrary {
-    my ($self, $generator, $str) = @_;
-    $self->_list_type->coarbitrary($generator, split //, $str);
+sub memoize_key {
+    my ($self, $str) = @_;
+    $self->_list_type->memoize_key(split //, $str);
 }
 
 1;

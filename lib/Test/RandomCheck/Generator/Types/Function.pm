@@ -14,20 +14,15 @@ sub arbitrary {
 
         my %results;
         sub {
-            my $id = join '\0', @_;
-            # TODO: We need not to use coarbitrarity no longer
-            my $fixed_generator = $self->dom->coarbitrary($generator, @_);
-            $results{$id} //= $fixed_generator->pick($freezed->clone, $size);
+            my $key = $self->dom->memoize_key(@_);
+            $results{$key} //= $generator->pick($freezed->clone, $size);
         };
     };
 }
 
-sub coarbitrary {
-    my ($self, $generator, $f) = @_;
-    $self->dom->arbitrary->flat_map(sub {
-        my @x = @_;
-        $self->cod->coarbitrary($generator, $f->(@x));
-    });
+sub memoize_key {
+    my ($self, $f) = @_;
+    int $f;
 }
 
 1;

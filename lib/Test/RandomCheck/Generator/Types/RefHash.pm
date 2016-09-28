@@ -27,10 +27,10 @@ sub arbitrary {
     $self->_list_type->arbitrary->map(sub { +{map { @$_ } @_} });
 }
 
-sub coarbitrary {
-    my ($self, $generator, $hash_ref) = @_;
-    $self->_list_type->coarbitrary(
-        $generator, map { [$_ => $hash_ref->{$_}] } keys %$hash_ref
+sub memoize_key {
+    my ($self, $hash_ref) = @_;
+    $self->_list_type->memoize_key(
+        map { [$_ => $hash_ref->{$_}] } keys %$hash_ref
     );
 }
 

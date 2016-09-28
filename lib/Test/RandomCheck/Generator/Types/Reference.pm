@@ -10,9 +10,9 @@ sub arbitrary {
     $self->type->arbitrary->map(sub { [@_] });
 }
 
-sub coarbitrary {
-    my ($self, $generator, $array_ref) = @_;
-    $self->type->coarbitrary($generator, @$array_ref);
+sub memoize_key {
+    my ($self, $array_ref) = @_;
+    $self->type->memoize_key(@$array_ref);
 }
 
 1;

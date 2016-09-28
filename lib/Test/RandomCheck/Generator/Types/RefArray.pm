@@ -21,9 +21,9 @@ sub arbitrary {
     $self->_inner_type->arbitrary;
 }
 
-sub coarbitrary {
+sub memoize_key {
     my $self = shift;
-    $self->_inner_type->coarbitrary(@_);
+    $self->_inner_type->memoize_key(@_);
 }
 
 1;

@@ -11,10 +11,10 @@ sub arbitrary {
     elements @{$self->items};
 }
 
-sub coarbitrary {
-    my ($self, $generator, $item) = @_;
+sub memoize_key {
+    my ($self, $item) = @_;
     my $n = List::MoreUtils::first_index { $_ eq $item } @{$self->items};
-    variant ($n, $generator);
+    $n;
 }
 
 1;

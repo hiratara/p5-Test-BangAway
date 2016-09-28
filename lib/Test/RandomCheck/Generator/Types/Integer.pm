@@ -10,9 +10,9 @@ sub arbitrary {
     range ($self->min, $self->max);
 }
 
-sub coarbitrary {
-    my ($self, $generator, $n) = @_;
-    variant ($n, $generator);
+sub memoize_key {
+    my ($self, $n) = @_;
+    $n;
 }
 
 1;

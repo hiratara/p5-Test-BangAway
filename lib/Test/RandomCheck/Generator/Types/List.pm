@@ -35,11 +35,9 @@ sub arbitrary {
     });
 }
 
-sub coarbitrary {
-    my ($self, $generator, @xs) = @_;
-    $generator = variant (-1, $self->type->coarbitrary($generator, $_))
-                                                                       for @xs;
-    variant (0, $generator);
+sub memoize_key {
+    my ($self, @xs) = @_;
+    join '\0', map { $self->type->memoize_key($_) } @xs;
 }
 
 1;

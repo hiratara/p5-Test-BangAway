@@ -6,7 +6,7 @@ use Class::Accessor::Lite (new => 1);
 use Test::RandomCheck::PRNG;
 
 sub arbitrary { die "You should implement " . (ref $_[0]) . "::arbitrary" }
-sub coarbitrary { die "You should implement " . (ref $_[0]) . "::coarbitrary" }
+sub memoize_key { die "You should implement " . (ref $_[0]) . "::memoize_key" }
 
 sub sample {
     my $self = shift;
