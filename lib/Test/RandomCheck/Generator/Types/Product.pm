@@ -19,7 +19,7 @@ sub arbitrary {
     my $self = shift;
     gen {
         my ($rand, $size) = @_;
-        map { $_->arbitrary->pick($rand->split, $size) } @{$self->types};
+        map { $_->arbitrary->pick($rand, $size) } @{$self->types};
     };
 }
 

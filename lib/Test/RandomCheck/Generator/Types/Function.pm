@@ -10,12 +10,11 @@ sub arbitrary {
     my $generator = $self->cod->arbitrary;
     gen {
         my ($rand, $size) = @_;
-        my $freezed = $rand->split;
 
         my %results;
         sub {
             my $key = $self->dom->memoize_key(@_);
-            $results{$key} //= $generator->pick($freezed->clone, $size);
+            $results{$key} //= $generator->pick($rand, $size);
         };
     };
 }

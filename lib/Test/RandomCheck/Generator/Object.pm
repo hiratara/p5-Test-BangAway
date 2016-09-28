@@ -18,25 +18,6 @@ sub range ($$) {
     gen { $_[0]->next_int($min, $max) };
 }
 
-sub variant ($$) {
-    my ($n, $generator) = @_;
-    gen {
-        use integer;
-        my ($rand, $size) = @_;
-
-        my ($i, $next_i, $cur_rand) = ($n, $n / 2, $rand);
-        while ($i != $next_i) {
-            my $another = $cur_rand->split;
-            $cur_rand = $another if $i % 2 == 0;
-
-            $i = $next_i;
-            $next_i /= 2;
-        }
-
-        $generator->($cur_rand, $size);
-    };
-}
-
 sub elements (@) {
     my $ref_elems = \@_;
     (range 0, $#$ref_elems)->map(sub { $ref_elems->[shift] });
@@ -55,9 +36,8 @@ sub map {
 sub flat_map {
     my ($self, $f) = @_;
     gen {
-        my ($rand1, $size) = @_;
-        my $rand2 = $rand1->split;
-        $f->($self->pick($rand1, $size))->pick($rand2, $size);
+        my ($rand, $size) = @_;
+        $f->($self->pick($rand, $size))->pick($rand, $size);
     };
 }
 

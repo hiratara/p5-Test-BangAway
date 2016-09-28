@@ -30,7 +30,7 @@ sub arbitrary {
         my $n = shift;
         gen {
             my ($rand, $size) = @_;
-            map { $generator->pick($rand->split, $size) } 1 .. $n;
+            map { $generator->pick($rand, $size) } 1 .. $n;
         };
     });
 }
