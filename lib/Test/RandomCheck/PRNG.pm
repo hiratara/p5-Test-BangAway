@@ -4,8 +4,6 @@ use warnings;
 
 sub new { $_[0] }
 
-sub next { int($_[0]->next_rand * 2147483563) }
-
 sub next_rand { rand() }
 
 sub next_int {
