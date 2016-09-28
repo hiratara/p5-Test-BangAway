@@ -1,5 +1,5 @@
 package MyType;
-use parent 'Test::RandomCheck::Generator::Types';
+use parent 'Test::RandomCheck::Types';
 use Class::Accessor::Lite (rw => [qw(generator)]);
 sub arbitrary { $_[0]->generator }
 

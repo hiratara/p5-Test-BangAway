@@ -1,7 +1,7 @@
-package Test::RandomCheck::Generator::Types::Integer;
+package Test::RandomCheck::Types::Integer;
 use strict;
 use warnings;
-use parent "Test::RandomCheck::Generator::Types";
+use parent "Test::RandomCheck::Types";
 use Class::Accessor::Lite (ro => [qw(min max)]);
 use Test::RandomCheck::Generator::Object;
 

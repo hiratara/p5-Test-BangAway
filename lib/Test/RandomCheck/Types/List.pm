@@ -1,7 +1,7 @@
-package Test::RandomCheck::Generator::Types::List;
+package Test::RandomCheck::Types::List;
 use strict;
 use warnings;
-use parent "Test::RandomCheck::Generator::Types";
+use parent "Test::RandomCheck::Types";
 use Class::Accessor::Lite (ro => [qw(min max type)]);
 use Exporter qw(import);
 use Test::RandomCheck::Generator::Object;
@@ -13,7 +13,7 @@ sub list ($;$$) {
     my ($min, $max) = @_;
     $min //= 0;
     $max //= 9;
-    Test::RandomCheck::Generator::Types::List->new(
+    Test::RandomCheck::Types::List->new(
         type => $type, min => $min, max => $max
     );
 }

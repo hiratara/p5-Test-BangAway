@@ -29,7 +29,7 @@ sub random_ok (&$;@) {
 
     my @types;
     push @types, shift
-                 while eval { $_[0]->isa("Test::RandomCheck::Generator::Types") };
+                 while eval { $_[0]->isa("Test::RandomCheck::Types") };
     $type = concat ($type, @types) if @types;
 
     my %params = @_;

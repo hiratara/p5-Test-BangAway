@@ -1,4 +1,4 @@
-package Test::RandomCheck::Generator::Types;
+package Test::RandomCheck::Types;
 use strict;
 use warnings;
 use UNIVERSAL::require;

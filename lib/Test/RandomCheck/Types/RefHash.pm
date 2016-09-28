@@ -1,20 +1,20 @@
-package Test::RandomCheck::Generator::Types::HashRef;
+package Test::RandomCheck::Types::HashRef;
 use strict;
 use warnings;
-use parent "Test::RandomCheck::Generator::Types";
+use parent "Test::RandomCheck::Types";
 use Class::Accessor::Lite (
     ro => [qw(min max key_type value_type)],
     rw => [qw(_list_type)],
 );
-use Test::RandomCheck::Generator::Types::List;
-use Test::RandomCheck::Generator::Types::Reference;
-use Test::RandomCheck::Generator::Types::Product;
+use Test::RandomCheck::Types::List;
+use Test::RandomCheck::Types::Reference;
+use Test::RandomCheck::Types::Product;
 
 sub new {
     my $class = shift;
     my $self = $class->SUPER::new(@_);
 
-    my $kv = Test::RandomCheck::Generator::Types::Reference->new(
+    my $kv = Test::RandomCheck::Types::Reference->new(
         type => product ($self->key_type, $self->value_type)
     );
     my $inner_type = list ($kv, $self->min, $self->max);

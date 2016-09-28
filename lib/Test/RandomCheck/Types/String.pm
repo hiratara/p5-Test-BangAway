@@ -1,10 +1,10 @@
-package Test::RandomCheck::Generator::Types::String;
+package Test::RandomCheck::Types::String;
 use strict;
 use warnings;
-use parent "Test::RandomCheck::Generator::Types";
+use parent "Test::RandomCheck::Types";
 use Class::Accessor::Lite (ro => [qw(min max)], rw => ['_list_type']);
-use Test::RandomCheck::Generator::Types::List qw(list);
-use Test::RandomCheck::Generator::Types::Char qw(char);
+use Test::RandomCheck::Types::List qw(list);
+use Test::RandomCheck::Types::Char qw(char);
 
 sub new {
     my $class = shift;

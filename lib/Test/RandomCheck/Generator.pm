@@ -3,24 +3,24 @@ use strict;
 use warnings;
 use Exporter qw(import);
 use Test::RandomCheck::Generator::Object;
-use Test::RandomCheck::Generator::Types;
+use Test::RandomCheck::Types;
 
 our @EXPORT = qw(
     enum list integer char string concat hash_ref array_ref function
 );
 
 sub enum (@) {
-    Test::RandomCheck::Generator::Types::Enum->new(
+    Test::RandomCheck::Types::Enum->new(
         items => [@_]
     );
 }
 
 sub list {
-    goto &Test::RandomCheck::Generator::Types::List::list;
+    goto &Test::RandomCheck::Types::List::list;
 }
 
 sub _all_integer () {
-    Test::RandomCheck::Generator::Types::AllInteger->new;
+    Test::RandomCheck::Types::AllInteger->new;
 }
 
 sub integer (;$$) {
@@ -28,29 +28,29 @@ sub integer (;$$) {
 
     my ($min, $max) = @_ >= 2 ? @_ : (0, @_);
     ($min, $max) = ($max, $min) if $min > $max;
-    Test::RandomCheck::Generator::Types::Integer->new(
+    Test::RandomCheck::Types::Integer->new(
         min => $min, max => $max
     );
 }
 
 sub char {
-    goto &Test::RandomCheck::Generator::Types::Char::char;
+    goto &Test::RandomCheck::Types::Char::char;
 }
 
 sub string (;$$) {
     my ($min, $max) = @_;
-    Test::RandomCheck::Generator::Types::String->new(
+    Test::RandomCheck::Types::String->new(
         min => $min, max => $max
     );
 }
 
 sub concat (@) { 
-    goto &Test::RandomCheck::Generator::Types::Product::product;
+    goto &Test::RandomCheck::Types::Product::product;
 }
 
 sub hash_ref ($$;$$) {
     my ($key_type, $value_type, $min, $max) = @_;
-    Test::RandomCheck::Generator::Types::HashRef->new(
+    Test::RandomCheck::Types::HashRef->new(
         key_type => $key_type, value_type => $value_type,
         min => $min, max => $max,
     );
@@ -58,14 +58,14 @@ sub hash_ref ($$;$$) {
 
 sub array_ref ($;$$) {
     my ($type, $min, $max) = @_;
-    Test::RandomCheck::Generator::Types::ArrayRef->new(
+    Test::RandomCheck::Types::ArrayRef->new(
         min => $min, max => $max, type => $type
     );
 }
 
 sub function ($$) {
     my ($dom, $cod) = @_;
-    Test::RandomCheck::Generator::Types::Function->new(
+    Test::RandomCheck::Types::Function->new(
         dom => $dom, cod => $cod
     );
 }

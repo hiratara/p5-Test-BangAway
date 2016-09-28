@@ -1,7 +1,7 @@
-package Test::RandomCheck::Generator::Types::AllInteger;
+package Test::RandomCheck::Types::AllInteger;
 use strict;
 use warnings;
-use parent "Test::RandomCheck::Generator::Types";
+use parent "Test::RandomCheck::Types";
 use Config ();
 use Test::RandomCheck::Generator::Object;
 

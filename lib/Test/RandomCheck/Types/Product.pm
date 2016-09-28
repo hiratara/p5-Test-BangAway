@@ -1,16 +1,16 @@
-package Test::RandomCheck::Generator::Types::Product;
+package Test::RandomCheck::Types::Product;
 use strict;
 use warnings;
-use parent "Test::RandomCheck::Generator::Types";
+use parent "Test::RandomCheck::Types";
 use Class::Accessor::Lite (ro => [qw(types)]);
 use Exporter qw(import);
-use Test::RandomCheck::Generator::Types::AllInteger;
+use Test::RandomCheck::Types::AllInteger;
 use Test::RandomCheck::Generator::Object;
 
 our @EXPORT = qw(product);
 
 sub product (@) {
-    Test::RandomCheck::Generator::Types::Product->new(
+    Test::RandomCheck::Types::Product->new(
         types => [@_]
     );
 }

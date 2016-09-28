@@ -1,9 +1,9 @@
-package Test::RandomCheck::Generator::Types::Reference;
+package Test::RandomCheck::Types::Reference;
 use strict;
 use warnings;
-use parent "Test::RandomCheck::Generator::Types";
+use parent "Test::RandomCheck::Types";
 use Class::Accessor::Lite (ro => [qw(type)]);
-use Test::RandomCheck::Generator::Types::List;
+use Test::RandomCheck::Types::List;
 
 sub arbitrary {
     my $self = shift;

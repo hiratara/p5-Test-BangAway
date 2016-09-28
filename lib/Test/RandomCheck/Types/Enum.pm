@@ -1,7 +1,7 @@
-package Test::RandomCheck::Generator::Types::Enum;
+package Test::RandomCheck::Types::Enum;
 use strict;
 use warnings;
-use parent "Test::RandomCheck::Generator::Types";
+use parent "Test::RandomCheck::Types";
 use Class::Accessor::Lite (ro => [qw(items)]);
 use List::MoreUtils ();
 use Test::RandomCheck::Generator::Object;

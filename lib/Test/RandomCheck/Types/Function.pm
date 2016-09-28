@@ -1,7 +1,7 @@
-package Test::RandomCheck::Generator::Types::Function;
+package Test::RandomCheck::Types::Function;
 use strict;
 use warnings;
-use parent "Test::RandomCheck::Generator::Types";
+use parent "Test::RandomCheck::Types";
 use Class::Accessor::Lite (ro => [qw(dom cod)]);
 use Test::RandomCheck::Generator::Object;
 
