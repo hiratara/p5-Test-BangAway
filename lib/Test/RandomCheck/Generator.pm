@@ -103,11 +103,6 @@ used by L<Test::RandomCheck>.
 
 =over 4
 
-=item C<<gen { ... };>>
-
-The most primitive constructor of this class. The block should return
-any values randomly. The block will be called on list context.
-
 =item C<<const 1, 2, 3;>>
 
 A generator which always returns specified values.
@@ -156,18 +151,6 @@ The generated array-ref will have length from min(e.g. 3) to max(e.g. 5).
 =head1 METHODS
 
 =over 4
-
-=item C<<my @random_values = $gen->pick;>>
-
-Pick a set of values from this generator.
-
-=item C<<$gen->map(sub { ...; return @values });>>
-
-A functor to apply normal functions to a Generator instance.
-
-=item C<<$gen->flat_map(sub { ...; return $new_gen });>>
-
-A kleisli composition to apply kleisli allows to a Generator instance.
 
 =back
 
