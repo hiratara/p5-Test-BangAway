@@ -96,13 +96,11 @@ any values randomly. The block will be called on list context.
 The block recieved C<$r> and C<$size> as its arguments. C<$r> is an instance of
 L<Test::RandomCheck::RPNG>.
 
--back
+=back
 
 =head1 METHODS
 
 =over 4
-
- arguments randomly for the block.
 
 =item C<<my @random_values = $gen->pick($rand, $size);>>
 
