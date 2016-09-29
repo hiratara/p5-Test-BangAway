@@ -7,7 +7,7 @@ package main;
 use strict;
 use warnings;
 use Test::RandomCheck;
-use Test::RandomCheck::Generator::Object;
+use Test::RandomCheck::ProbMonad;
 use Test::More;
 
 random_ok { @_ == 2 && $_[0] eq 'T' && $_[1] eq 'F' }

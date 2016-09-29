@@ -5,7 +5,7 @@ use parent "Test::RandomCheck::Types";
 use Class::Accessor::Lite (ro => [qw(types)]);
 use Exporter qw(import);
 use Test::RandomCheck::Types::AllInteger;
-use Test::RandomCheck::Generator::Object;
+use Test::RandomCheck::ProbMonad;
 
 our @EXPORT = qw(product);
 

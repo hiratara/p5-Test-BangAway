@@ -4,7 +4,7 @@ use warnings;
 use parent "Test::RandomCheck::Types";
 use Class::Accessor::Lite (ro => [qw(min max type)]);
 use Exporter qw(import);
-use Test::RandomCheck::Generator::Object;
+use Test::RandomCheck::ProbMonad;
 
 our @EXPORT = qw(list);
 

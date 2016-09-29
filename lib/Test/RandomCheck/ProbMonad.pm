@@ -1,4 +1,4 @@
-package Test::RandomCheck::Generator::Object;
+package Test::RandomCheck::ProbMonad;
 use strict;
 use warnings;
 use Exporter qw(import);
@@ -48,11 +48,11 @@ __END__
 
 =head1 NAME
 
-Test::RandomCheck::Generator::Object - A generator monad
+Test::RandomCheck::ProbMonad - The probability monad
 
 =head1 SYNOPSIS
 
-  use Test::RandomCheck::Generator::Object;
+  use Test::RandomCheck::ProbMonad;
   use Test::RandomCheck::PRNG;
 
   # A basic generator which returns random integers

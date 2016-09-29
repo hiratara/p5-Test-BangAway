@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use parent "Test::RandomCheck::Types";
 use Config ();
-use Test::RandomCheck::Generator::Object;
+use Test::RandomCheck::ProbMonad;
 
 sub arbitrary {
     gen {

@@ -4,7 +4,7 @@ use warnings;
 use parent "Test::RandomCheck::Types";
 use Class::Accessor::Lite (ro => [qw(items)]);
 use List::MoreUtils ();
-use Test::RandomCheck::Generator::Object;
+use Test::RandomCheck::ProbMonad;
 
 sub arbitrary {
     my $self = shift;

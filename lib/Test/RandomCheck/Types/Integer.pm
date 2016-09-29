@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use parent "Test::RandomCheck::Types";
 use Class::Accessor::Lite (ro => [qw(min max)]);
-use Test::RandomCheck::Generator::Object;
+use Test::RandomCheck::ProbMonad;
 
 sub arbitrary {
     my $self = shift;

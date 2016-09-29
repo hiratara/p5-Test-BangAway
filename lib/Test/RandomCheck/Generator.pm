@@ -2,7 +2,7 @@ package Test::RandomCheck::Generator;
 use strict;
 use warnings;
 use Exporter qw(import);
-use Test::RandomCheck::Generator::Object;
+use Test::RandomCheck::ProbMonad;
 use Test::RandomCheck::Types;
 
 our @EXPORT = qw(

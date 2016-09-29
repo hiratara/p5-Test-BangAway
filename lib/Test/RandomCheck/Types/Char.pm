@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use parent "Test::RandomCheck::Types";
 use Exporter qw(import);
-use Test::RandomCheck::Generator::Object;
+use Test::RandomCheck::ProbMonad;
 
 our @EXPORT = qw(char);
 
