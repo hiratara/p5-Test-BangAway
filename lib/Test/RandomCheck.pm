@@ -8,7 +8,7 @@ use Test::RandomCheck::PRNG;
 use Test::More ();
 use 5.008_005;
 use constant DEBUG => $ENV{RANDOMCHECK_DEBUG};
-our $VERSION = '0.02';
+our $VERSION = '0.01';
 
 our @EXPORT = qw(random_ok);
 

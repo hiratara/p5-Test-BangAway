@@ -4,6 +4,7 @@ requires 'perl', '5.008005';
 
 requires 'UNIVERSAL::require';
 requires 'Class::Accessor::Lite';
+requires 'List::MoreUtils';
 
 on test => sub {
     requires 'Test::More', '0.88';
