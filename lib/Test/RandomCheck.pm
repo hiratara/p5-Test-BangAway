@@ -1,12 +1,12 @@
 package Test::RandomCheck;
 use strict;
 use warnings;
+use 5.010000;
 use Data::Dumper;
 use Exporter qw(import);
 use Test::RandomCheck::Generator;
 use Test::RandomCheck::PRNG;
 use Test::More ();
-use 5.008_005;
 use constant DEBUG => $ENV{RANDOMCHECK_DEBUG};
 our $VERSION = '0.01';
 
